@@ -18,7 +18,8 @@
       <!-- Gallery -->
       <div class="product-gallery">
         <div class="gallery-main">
-          <img :src="selectedImage" :alt="product.name" class="gallery-main__img" />
+          <!-- <img :src="selectedImage" :alt="product.name" class="gallery-main__img" /> -->
+           <img :src="getImageUrl(selectedImage)" :alt="product.name" class="gallery-main__img" />
         </div>
         <div v-if="product.images.length > 1" class="gallery-thumbs">
           <button
@@ -27,7 +28,8 @@
             :class="['thumb', { active: selectedImage === img.url }]"
             @click="selectedImage = img.url"
           >
-            <img :src="img.url" :alt="img.alt_text || product.name" />
+            <!-- <img :src="img.url" :alt="img.alt_text || product.name" /> -->
+             <img :src="getImageUrl(img.url)" :alt="img.alt_text || product.name" />
           </button>
         </div>
       </div>
@@ -183,6 +185,7 @@
 </template>
 
 <script setup>
+import { getImageUrl } from '@/utils/image'
 import { ref, computed, watch, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import { toast } from 'vue3-toastify'

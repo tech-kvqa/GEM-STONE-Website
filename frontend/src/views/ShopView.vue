@@ -4,7 +4,8 @@
 
     <!-- Category Banner -->
     <div v-if="currentCat" class="cat-banner">
-      <img :src="currentCat.banner_url || currentCat.image_url" :alt="currentCat.name" />
+      <!-- <img :src="currentCat.banner_url || currentCat.image_url" :alt="currentCat.name" /> -->
+      <img :src="getImageUrl(currentCat.banner_url || currentCat.image_url)" :alt="currentCat.name" />
       <div class="cat-banner__overlay">
         <p class="label-caps">Crystal Collection</p>
         <h1>{{ currentCat.name }}</h1>
@@ -136,6 +137,7 @@
 </template>
 
 <script setup>
+import { getImageUrl } from '@/utils/image'
 import { ref, reactive, watch, onMounted, computed } from 'vue'
 import { useRoute } from 'vue-router'
 import ProductCard from '@/components/product/ProductCard.vue'
