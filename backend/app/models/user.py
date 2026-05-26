@@ -189,6 +189,7 @@ class Review(Base):
     title      = Column(String(200))
     body       = Column(Text)
     is_verified = Column(Boolean, default=False)
+    is_approved = Column(Boolean, default=False)
     created_at  = Column(DateTime, server_default=func.now())
 
     product = relationship("Product", back_populates="reviews")
