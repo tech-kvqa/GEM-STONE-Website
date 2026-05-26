@@ -68,11 +68,21 @@
 </template>
 
 <script setup>
+import { getImageUrl } from '@/utils/image'
 import { useCartStore } from '@/store/cart'
 const cart = useCartStore()
-const primaryImage = p =>
-  p.images?.find(i => i.is_primary)?.url || p.images?.[0]?.url ||
-  'https://images.unsplash.com/photo-1610890690846-4a7e5adacce8?w=200'
+// const primaryImage = p =>
+//   p.images?.find(i => i.is_primary)?.url || p.images?.[0]?.url ||
+//   'https://images.unsplash.com/photo-1610890690846-4a7e5adacce8?w=200'
+const primaryImage = (p) => {
+  const img =
+    p.images?.find(i => i.is_primary)?.url ||
+    p.images?.[0]?.url
+
+  return img
+    ? getImageUrl(img)
+    : 'https://images.unsplash.com/photo-1610890690846-4a7e5adacce8?w=200'
+}
 </script>
 
 <style scoped>

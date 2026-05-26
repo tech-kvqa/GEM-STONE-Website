@@ -43,6 +43,7 @@
 </template>
 
 <script setup>
+import { getImageUrl } from '@/utils/image'
 import { ref, computed } from 'vue'
 import { toast } from 'vue3-toastify'
 import { useCartStore } from '@/store/cart'
@@ -56,12 +57,25 @@ const auth    = useAuthStore()
 const hovered = ref(false)
 const adding  = ref(false)
 
-const primaryImage = computed(() =>
-  props.product.images?.find(i => i.is_primary)?.url ||
-  props.product.images?.[0]?.url ||
-  'https://images.unsplash.com/photo-1610890690846-4a7e5adacce8?w=600'
-)
-const secondImage = computed(() => props.product.images?.find(i => !i.is_primary)?.url || null)
+// const primaryImage = computed(() =>
+//   props.product.images?.find(i => i.is_primary)?.url ||
+//   props.product.images?.[0]?.url ||
+//   'https://images.unsplash.com/photo-1610890690846-4a7e5adacce8?w=600'
+// )
+const primaryImage = computed(() => {
+  const img =
+    props.product.images?.find(i => i.is_primary)?.url ||
+    props.product.images?.[0]?.url
+
+  return img
+    ? getImageUrl(img)
+    : 'https://images.unsplash.com/photo-1610890690846-4a7e5adacce8?w=600'
+})
+// const secondImage = computed(() => props.product.images?.find(i => !i.is_primary)?.url || null)
+const secondImage = computed(() => {
+  const img = props.product.images?.find(i => !i.is_primary)?.url
+  return img ? getImageUrl(img) : null
+})
 const discountPct = computed(() => {
   if (!props.product.compare_price) return 0
   return Math.round((1 - props.product.price / props.product.compare_price) * 100)
