@@ -46,7 +46,8 @@
           <tr v-for="p in products" :key="p.id">
             <td>
               <div class="prod-cell">
-                <!-- <img :src="p.images?.[0] || 'https://images.unsplash.com/photo-1599707367072-cd6ada2bc375?w=60'" -->
+                <!-- <img :src="p.images?.[0] || 'https://images.unsplash.com/photo-1599707367072-cd6ada2bc375?w=60'" 
+                 :alt="p.name" class="prod-thumb" />-->
                 <img
                   :src="p.images?.[0]
                     ? getImageUrl(p.images[0])
@@ -54,7 +55,6 @@
                   :alt="p.name"
                   class="prod-thumb"
                 />
-                  :alt="p.name" class="prod-thumb" />
                 <div>
                   <p class="prod-name">{{ p.name }}</p>
                   <p class="prod-sku label-caps">{{ p.sku || '—' }}</p>
