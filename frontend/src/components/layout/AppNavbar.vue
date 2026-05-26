@@ -17,7 +17,12 @@
                 class="mega-item" @click="megaOpen = null"
               >
                 <div class="mega-item__img">
-                  <img :src="cat.image_url" :alt="cat.name" loading="lazy" />
+                  <!-- <img :src="cat.image_url" :alt="cat.name" loading="lazy" /> -->
+                   <img
+                      :src="`https://gem-stone-website.onrender.com${cat.image_url}`"
+                      :alt="cat.name"
+                      loading="lazy"
+                    />
                 </div>
                 <span class="mega-item__name">{{ cat.name }}</span>
               </router-link>
