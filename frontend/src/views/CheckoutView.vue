@@ -164,6 +164,7 @@
 </template>
 
 <script setup>
+import { getImageUrl } from '@/utils/image'
 import { ref, reactive } from 'vue'
 import { useRouter } from 'vue-router'
 import { toast } from 'vue3-toastify'
@@ -194,9 +195,19 @@ const paymentMethods = [
   { value: 'upi',      icon: '📱', name: 'UPI',              sub: 'Google Pay, PhonePe, Paytm' },
 ]
 
-const primaryImage = p =>
-  p.images?.find(i => i.is_primary)?.url || p.images?.[0]?.url ||
-  'https://images.unsplash.com/photo-1599707367072-cd6ada2bc375?w=200'
+// const primaryImage = p =>
+//   p.images?.find(i => i.is_primary)?.url || p.images?.[0]?.url ||
+//   'https://images.unsplash.com/photo-1599707367072-cd6ada2bc375?w=200'
+
+const primaryImage = (p) => {
+  const img =
+    p.images?.find(i => i.is_primary)?.url ||
+    p.images?.[0]?.url
+
+  return img
+    ? getImageUrl(img)
+    : 'https://images.unsplash.com/photo-1599707367072-cd6ada2bc375?w=200'
+}
 
 // async function placeOrder() {
 //   if (!cart.items.length) { toast.error('Your cart is empty'); return }
