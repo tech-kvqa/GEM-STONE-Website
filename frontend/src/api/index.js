@@ -97,7 +97,8 @@ import axios from 'axios'
 
 // ── Consumer API instance (unchanged) ─────────────────────────────────────────
 const api = axios.create({
-  baseURL: '/api',
+  // baseURL: '/api',
+  baseURL: 'https://gem-stone-website.onrender.com/api',
   timeout: 15000,
   headers: { 'Content-Type': 'application/json' }
 })
@@ -121,7 +122,8 @@ api.interceptors.response.use(
 
 // ── Admin API instance (NEW — separate token key) ─────────────────────────────
 const adminApi = axios.create({
-  baseURL: '/api',
+  // baseURL: '/api',
+  baseURL: 'https://gem-stone-website.onrender.com/api',
   timeout: 15000,
   headers: { 'Content-Type': 'application/json' }
 })
