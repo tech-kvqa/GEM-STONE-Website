@@ -46,7 +46,14 @@
           <tr v-for="p in products" :key="p.id">
             <td>
               <div class="prod-cell">
-                <img :src="p.images?.[0] || 'https://images.unsplash.com/photo-1599707367072-cd6ada2bc375?w=60'"
+                <!-- <img :src="p.images?.[0] || 'https://images.unsplash.com/photo-1599707367072-cd6ada2bc375?w=60'" -->
+                <img
+                  :src="p.images?.[0]
+                    ? getImageUrl(p.images[0])
+                    : 'https://images.unsplash.com/photo-1599707367072-cd6ada2bc375?w=60'"
+                  :alt="p.name"
+                  class="prod-thumb"
+                />
                   :alt="p.name" class="prod-thumb" />
                 <div>
                   <p class="prod-name">{{ p.name }}</p>
@@ -141,7 +148,13 @@
             <input type="file" accept="image/*" @change="onFileChange" class="input-field" style="padding:0.5rem" />
           </div>
           <div v-if="editProduct.images?.length" class="img-preview-row">
-            <img v-for="(img, i) in editProduct.images" :key="i" :src="img" class="img-thumb" />
+            <!-- <img v-for="(img, i) in editProduct.images" :key="i" :src="img" class="img-thumb" /> -->
+            <img
+              v-for="(img, i) in editProduct.images"
+              :key="i"
+              :src="getImageUrl(img)"
+              class="img-thumb"
+            />
           </div>
 
           <div v-if="editMsg" :class="['edit-msg', editMsg.ok ? 'msg--ok' : 'msg--err']">{{ editMsg.text }}</div>
@@ -159,6 +172,7 @@
 </template>
 
 <script setup>
+import { getImageUrl } from '@/utils/image'
 import { ref, computed, onMounted } from 'vue'
 import { toast } from 'vue3-toastify'
 import { adminProductApi } from '@/api'
