@@ -11,8 +11,13 @@
           <span class="nav-link nav-link--has-arrow">Crystals <span class="nav-arrow">›</span></span>
           <div :class="['mega-panel', { 'mega-panel--open': megaOpen === 'crystals' }]">
             <div class="mega-grid">
-              <router-link
+              <!-- <router-link
                 v-for="cat in categories" :key="cat.slug"
+                :to="`/shop/${cat.slug}`"
+                class="mega-item" @click="megaOpen = null"
+              > -->
+              <router-link
+                v-for="cat in crystalCategories" :key="cat.slug"
                 :to="`/shop/${cat.slug}`"
                 class="mega-item" @click="megaOpen = null"
               >
