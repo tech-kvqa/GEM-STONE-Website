@@ -114,14 +114,36 @@
     </div>
 
     <!-- Mobile Menu -->
-    <div :class="['mobile-menu', { 'mobile-menu--open': mobileOpen }]">
+    <!-- <div :class="['mobile-menu', { 'mobile-menu--open': mobileOpen }]">
       <router-link to="/" @click="mobileOpen = false">Home</router-link>
       <router-link to="/shop" @click="mobileOpen = false">All Crystals</router-link>
       <router-link v-for="cat in categories" :key="cat.slug" :to="`/shop/${cat.slug}`" @click="mobileOpen = false">{{ cat.name }}</router-link>
       <div class="mobile-divider-label">Premium Collection</div>
       <router-link to="/shop/jewellery" @click="mobileOpen = false">Jewellery Designs</router-link>
-      <router-link to="/shop/crystal-designs" @click="mobileOpen = false">Crystal Designs</router-link>
+      <router-link to="/shop/crystal-designs" @click="mobileOpen = false">Crystal Designs</router-link> -->
       <!-- <router-link to="/shop/lab-diamonds" @click="mobileOpen = false">Lab Diamonds</router-link> -->
+      <!-- <div class="mobile-menu__divider"></div>
+      <router-link to="/consultation" @click="mobileOpen = false" class="mobile-consult-link">✦ Book Consultation</router-link>
+      <router-link to="/our-story" @click="mobileOpen = false">Our Story</router-link>
+      <router-link to="/crystal-guide" @click="mobileOpen = false">Crystal Guide</router-link>
+      <div class="mobile-menu__divider"></div>
+      <button v-if="!auth.isLoggedIn" @click="handleAccount">Sign In / Register</button>
+      <router-link v-else to="/account" @click="mobileOpen = false">My Account</router-link>
+      <router-link v-if="auth.isLoggedIn" to="/wishlist" @click="mobileOpen = false">Wishlist</router-link>
+    </div> -->
+
+    <div :class="['mobile-menu', { 'mobile-menu--open': mobileOpen }]">
+      <router-link to="/" @click="mobileOpen = false">Home</router-link>
+      <router-link to="/shop" @click="mobileOpen = false">All Crystals</router-link>
+      <router-link v-for="cat in categories" :key="cat.slug" :to="`/shop/${cat.slug}`" @click="mobileOpen = false">{{ cat.name }}</router-link>
+      <div class="mobile-divider-label">Premium — Jewellery</div>
+      <router-link to="/shop/crystal-bracelets" @click="mobileOpen = false">Crystal Bracelets</router-link>
+      <router-link to="/shop/anklets"           @click="mobileOpen = false">Anklets</router-link>
+      <router-link to="/shop/pendants-malas"    @click="mobileOpen = false">Pendants &amp; Malas</router-link>
+      <router-link to="/shop/rudraksha"         @click="mobileOpen = false">Rudraksha</router-link>
+      <div class="mobile-divider-label">Premium — Crystal Designs</div>
+      <router-link to="/shop/yantras-frames"    @click="mobileOpen = false">Yantras &amp; Frames</router-link>
+      <router-link to="/shop/crystal-designs"   @click="mobileOpen = false">Crystal Designs</router-link>
       <div class="mobile-menu__divider"></div>
       <router-link to="/consultation" @click="mobileOpen = false" class="mobile-consult-link">✦ Book Consultation</router-link>
       <router-link to="/our-story" @click="mobileOpen = false">Our Story</router-link>
@@ -137,7 +159,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted, nextTick } from 'vue'
+import { ref, computed, onMounted, onUnmounted, nextTick } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '@/store/auth'
 import { useCartStore } from '@/store/cart'
@@ -158,7 +180,10 @@ const searchOpen  = ref(false)
 const searchQuery = ref('')
 const searchInput = ref(null)
 const authModalOpen = ref(false)
-const categories  = ref([])
+// const categories  = ref([])
+const categories        = ref([])
+const crystalSlugs      = ['quartz','amethyst','rose-quartz','black-tourmaline','citrine','labradorite','selenite','lapis-lazuli']
+const crystalCategories = computed(() => categories.value.filter(c => crystalSlugs.includes(c.slug)))
 let lastY = 0
 
 const premiumCollections = [
@@ -166,22 +191,37 @@ const premiumCollections = [
     icon: '💍',
     label: 'Jewellery Designs',
     desc: 'Wearable crystal energy — hand-crafted into elegant pieces.',
+    // items: [
+    //   { name: 'Crystal Pendants',    to: '/shop/jewellery', color: '#c4876a' },
+    //   { name: 'Chakra Bracelets',    to: '/shop/jewellery', color: '#9b72cf' },
+    //   { name: 'Crystal Rings',       to: '/shop/jewellery', color: '#e07b54' },
+    //   { name: 'Healing Necklaces',   to: '/shop/jewellery', color: '#6dba82' },
+    // ]
     items: [
-      { name: 'Crystal Pendants',    to: '/shop/jewellery', color: '#c4876a' },
-      { name: 'Chakra Bracelets',    to: '/shop/jewellery', color: '#9b72cf' },
-      { name: 'Crystal Rings',       to: '/shop/jewellery', color: '#e07b54' },
-      { name: 'Healing Necklaces',   to: '/shop/jewellery', color: '#6dba82' },
+      { name: 'Crystal Bracelets',  to: '/shop/crystal-bracelets', color: '#c4876a' },
+      { name: 'Anklets',            to: '/shop/anklets',           color: '#9b72cf' },
+      { name: 'Pendants & Malas',   to: '/shop/pendants-malas',    color: '#e07b54' },
+      { name: 'Rudraksha',          to: '/shop/rudraksha',         color: '#6dba82' },
     ]
   },
+  // {
+  //   icon: '🔮',
+  //   label: 'Crystal Designs',
+  //   desc: 'Sacred forms and bespoke crystal artistry for your space.',
+  //   items: [
+  //     { name: 'Crystal Spheres',     to: '/shop/crystal-designs', color: '#5b9dd4' },
+  //     { name: 'Crystal Towers',      to: '/shop/crystal-designs', color: '#c0392b' },
+  //     { name: 'Geometric Sets',      to: '/shop/crystal-designs', color: '#e8b84b' },
+  //     { name: 'Altar Pieces',        to: '/shop/crystal-designs', color: '#c4876a' },
+  //   ]
+  // },
   {
     icon: '🔮',
     label: 'Crystal Designs',
-    desc: 'Sacred forms and bespoke crystal artistry for your space.',
+    desc: 'Sacred crystal art and spiritual pieces for your space.',
     items: [
-      { name: 'Crystal Spheres',     to: '/shop/crystal-designs', color: '#5b9dd4' },
-      { name: 'Crystal Towers',      to: '/shop/crystal-designs', color: '#c0392b' },
-      { name: 'Geometric Sets',      to: '/shop/crystal-designs', color: '#e8b84b' },
-      { name: 'Altar Pieces',        to: '/shop/crystal-designs', color: '#c4876a' },
+      { name: 'Yantras & Frames',   to: '/shop/yantras-frames',   color: '#5b9dd4' },
+      { name: 'Crystal Designs',    to: '/shop/crystal-designs',  color: '#c0392b' },
     ]
   },
   // {

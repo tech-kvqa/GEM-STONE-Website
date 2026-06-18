@@ -1,8 +1,12 @@
 <template>
   <div id="crystal-luxe">
-    <AppNavbar />
+    <!-- <AppNavbar />
     <CartDrawer />
-    <AuthModal v-if="showAuth" @close="showAuth = false" />
+    <AuthModal v-if="showAuth" @close="showAuth = false" /> -->
+
+    <AppNavbar v-if="!isAdminRoute"/>
+    <CartDrawer v-if="!isAdminRoute"/>
+    <AuthModal v-if="showAuth && !isAdminRoute" @close="showAuth = false" />
 
     <router-view v-slot="{ Component }">
       <transition name="page" mode="out-in">
@@ -15,7 +19,8 @@
 </template>
 
 <script setup>
-import { ref, watch, onMounted } from 'vue'
+// import { ref, watch, onMounted } from 'vue'
+import { ref, computed, watch, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import AppNavbar from '@/components/layout/AppNavbar.vue'
 import AppFooter from '@/components/layout/AppFooter.vue'
@@ -30,6 +35,7 @@ const auth = useAuthStore()
 const cart = useCartStore()
 const wishlist = useWishlistStore()
 const showAuth = ref(false)
+const isAdminRoute = computed(() => route.path.startsWith('/admin'))
 
 onMounted(async () => {
   await auth.fetchMe()

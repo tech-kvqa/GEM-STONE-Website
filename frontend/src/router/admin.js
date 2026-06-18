@@ -24,7 +24,7 @@ export const adminRoutes = [
     name: 'AdminLayout',
     component: () => import('@/views/admin/AdminLayout.vue'),
     meta: { requiresAdmin: true },
-    redirect: '/admin',
+    redirect: '/admin/dashboard',
     children: [
       { path: 'dashboard',     name: 'AdminDashboard',     component: () => import('@/views/admin/Dashboard.vue') },
       { path: 'products',      name: 'AdminProducts',      component: () => import('@/views/admin/Products.vue') },

@@ -37,7 +37,7 @@
         </div>
 
         <!-- Categories -->
-        <div class="filter-group">
+        <!-- <div class="filter-group">
           <h4 class="filter-group__title">Collection</h4>
           <router-link to="/shop" class="filter-option" :class="{ active: !$route.params.category }">All Crystals</router-link>
           <router-link
@@ -47,6 +47,44 @@
             class="filter-option"
             :class="{ active: $route.params.category === cat.slug }"
           >{{ cat.name }}</router-link>
+        </div> -->
+
+        <!-- Categories — Crystals -->
+        <div class="filter-group">
+          <h4 class="filter-group__title">Crystals</h4>
+          <router-link to="/shop" class="filter-option" :class="{ active: !$route.params.category }">All</router-link>
+          <router-link
+            v-for="cat in crystalCategories"
+            :key="cat.slug"
+            :to="`/shop/${cat.slug}`"
+            class="filter-option"
+            :class="{ active: $route.params.category === cat.slug }"
+          >{{ cat.name }}</router-link>
+        </div>
+
+        <!-- Categories — Premium Collection -->
+        <div class="filter-group">
+          <h4 class="filter-group__title">Premium Collection</h4>
+          <div class="filter-subgroup">
+            <p class="filter-subgroup__label">Jewellery</p>
+            <router-link
+              v-for="cat in jewelleryCategories"
+              :key="cat.slug"
+              :to="`/shop/${cat.slug}`"
+              class="filter-option"
+              :class="{ active: $route.params.category === cat.slug }"
+            >{{ cat.name }}</router-link>
+          </div>
+          <div class="filter-subgroup" style="margin-top:0.75rem">
+            <p class="filter-subgroup__label">Crystal Art</p>
+            <router-link
+              v-for="cat in designCategories"
+              :key="cat.slug"
+              :to="`/shop/${cat.slug}`"
+              class="filter-option"
+              :class="{ active: $route.params.category === cat.slug }"
+            >{{ cat.name }}</router-link>
+          </div>
         </div>
 
         <!-- Price Range -->
@@ -146,6 +184,14 @@ import { productApi, categoryApi } from '@/api'
 const route = useRoute()
 const products   = ref([])
 const categories = ref([])
+// Slugs that belong in each section
+const CRYSTAL_SLUGS    = ['quartz','amethyst','rose-quartz','black-tourmaline','citrine','labradorite','selenite','lapis-lazuli']
+const JEWELLERY_SLUGS  = ['crystal-bracelets','anklets','pendants-malas','rudraksha']
+const DESIGN_SLUGS     = ['yantras-frames','crystal-designs']
+
+const crystalCategories   = computed(() => categories.value.filter(c => CRYSTAL_SLUGS.includes(c.slug)))
+const jewelleryCategories = computed(() => categories.value.filter(c => JEWELLERY_SLUGS.includes(c.slug)))
+const designCategories    = computed(() => categories.value.filter(c => DESIGN_SLUGS.includes(c.slug)))
 const total      = ref(0)
 const pages      = ref(1)
 const currentPage = ref(1)
@@ -334,6 +380,15 @@ onMounted(async () => {
 .filters__close { display: none; color: var(--gold-dim); }
 
 .filter-group { margin-bottom: 2rem; border-bottom: 1px solid rgba(255,255,255,0.06); padding-bottom: 1.5rem; }
+.filter-subgroup__label {
+  font-size: 0.58rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--rose-gold);
+  margin-bottom: 0.35rem;
+  padding-left: 0.1rem;
+}
 .filter-group__title {
   font-size: 0.62rem; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase;
   color: var(--gold-dim); margin-bottom: 0.9rem;

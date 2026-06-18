@@ -223,14 +223,29 @@ export const adminDashboardApi = {
   inventory: ()      => adminApi.get('/admin/inventory'),
 }
 
+// export const adminProductApi = {
+//   /** GET /api/admin/products  — all products incl. inactive */
+//   list:   (params = {}) => adminApi.get('/admin/products',            { params }),
+//   update: (id, data)    => adminApi.patch(`/admin/products/${id}`,    data),
+//   upload: (id, formData)=> adminApi.post(`/admin/products/${id}/image`, formData, {
+//     headers: { 'Content-Type': 'multipart/form-data' }
+//   }),
+//   deactivate: id        => adminApi.delete(`/admin/products/${id}`),
+// }
+
 export const adminProductApi = {
   /** GET /api/admin/products  — all products incl. inactive */
-  list:   (params = {}) => adminApi.get('/admin/products',            { params }),
-  update: (id, data)    => adminApi.patch(`/admin/products/${id}`,    data),
-  upload: (id, formData)=> adminApi.post(`/admin/products/${id}/image`, formData, {
+  list:        (params = {})   => adminApi.get('/admin/products',                        { params }),
+  create:      data           => adminApi.post('/admin/products',                        data),
+  update:      (id, data)      => adminApi.patch(`/admin/products/${id}`,                data),
+  // Image management
+  listImages:  (id)            => adminApi.get(`/admin/products/${id}/images`),
+  upload:      (id, formData)  => adminApi.post(`/admin/products/${id}/image`,           formData, {
     headers: { 'Content-Type': 'multipart/form-data' }
   }),
-  deactivate: id        => adminApi.delete(`/admin/products/${id}`),
+  deleteImage: (pid, iid) => adminApi.delete(`/admin/products/${pid}/images/${iid}`),
+  setPrimary:  (pid, iid) => adminApi.patch(`/admin/products/${pid}/images/${iid}/set-primary`),
+  deactivate:  id          => adminApi.delete(`/admin/products/${id}`),
 }
 
 export const adminOrderApi = {

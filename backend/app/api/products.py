@@ -59,7 +59,9 @@ def product_to_dict(p: Product, db: Session) -> dict:
                 "is_primary": img.is_primary,
                 "sort_order": img.sort_order,
             }
-            for img in p.images
+            # for img in p.images
+            # Primary image always first, then by sort_order
+            for img in sorted(p.images, key=lambda i: (not i.is_primary, i.sort_order))
         ],
         "avg_rating": stats["avg_rating"],
         "review_count": stats["review_count"],
