@@ -64,7 +64,7 @@
                 />
                 <div>
                   <p class="prod-name">{{ p.name }}</p>
-                  {{ JSON.stringify(p.images[0]) }}
+                  <!-- {{ JSON.stringify(p.images[0]) }} -->
                   <p class="prod-sku label-caps">{{ p.sku || '—' }}</p>
                 </div>
               </div>
