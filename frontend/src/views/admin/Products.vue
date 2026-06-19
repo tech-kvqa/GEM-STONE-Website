@@ -57,7 +57,7 @@
                  :alt="p.name" class="prod-thumb" />-->
                 <img
                   :src="p.images?.[0]
-                    ? getImageUrl(p.images[0].url)
+                    ? getImageUrl(p.images[0])
                     : 'https://images.unsplash.com/photo-1599707367072-cd6ada2bc375?w=60'"
                   :alt="p.name"
                   class="prod-thumb"
@@ -725,6 +725,7 @@ async function openEdit(p) {
   
   try {
     const { data } = await adminProductApi.listImages(p.id)
+    console.log('IMAGE DATA', data)
     editProduct.value.images = data || []
   } catch {
     editProduct.value.images = []
