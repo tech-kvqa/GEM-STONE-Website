@@ -64,6 +64,7 @@
                 />
                 <div>
                   <p class="prod-name">{{ p.name }}</p>
+                  {{ JSON.stringify(p.images[0]) }}
                   <p class="prod-sku label-caps">{{ p.sku || '—' }}</p>
                 </div>
               </div>
@@ -478,7 +479,11 @@
             <div v-if="editProduct.images?.length" class="img-gallery-grid">
               <div v-for="(img, i) in editProduct.images" :key="i" :class="['img-tile', img.is_primary && 'img-tile--primary']">
                 <div class="img-tile__photo">
-                  <img :src="img.url" :alt="`Product image ${i+1}`" />
+                  <!-- <img :src="img.url" :alt="`Product image ${i+1}`" /> -->
+                  <img
+                    :src="getImageUrl(img.url)"
+                    :alt="`Product image ${i+1}`"
+                  />
                   <div v-if="img.is_primary" class="img-tile__badge">Primary</div>
                 </div>
                 <div class="img-tile__actions">
