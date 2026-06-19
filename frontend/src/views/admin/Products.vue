@@ -57,7 +57,7 @@
                  :alt="p.name" class="prod-thumb" />-->
                 <img
                   :src="p.images?.[0]
-                    ? getImageUrl(p.images[0])
+                    ? getImageUrl(p.images[0].url)
                     : 'https://images.unsplash.com/photo-1599707367072-cd6ada2bc375?w=60'"
                   :alt="p.name"
                   class="prod-thumb"
